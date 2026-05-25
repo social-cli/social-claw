@@ -9,6 +9,9 @@
   <sub>Connect via WhatsApp · Telegram · Discord · Signal · Slack · iMessage · CLI</sub>
 </p>
 
+<img width="1918" height="890" alt="social-claw" src="https://github.com/user-attachments/assets/71c6ae6d-f729-4b82-9e49-71870804f59c" />
+
+
 <p align="center">
   <a href="https://github.com/social-cli/social-claw"><img src="https://img.shields.io/badge/GitHub-social--claw-181717?logo=github" alt="GitHub"></a>&nbsp;
   <a href="https://socialcli.xyz"><img src="https://img.shields.io/badge/Web-socialcli.xyz-D95F2B" alt="Website"></a>&nbsp;
