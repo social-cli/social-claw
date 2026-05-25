@@ -38,8 +38,17 @@ fi
   echo ""
   echo ""
 
-  # Logo as block pixel art (24 cols wide)
-  chafa --format=symbols --symbols=block --size=24x12 --colors=truecolor "$ICON_SRC"
+  # Logo as block pixel art (24 cols wide) — pad each line to exactly 24 cols
+  # so chafa's variable-length output doesn't break our centering.
+  ICON_WIDTH=24
+  while IFS= read -r line; do
+    # Strip ANSI codes to measure visible width, then pad to ICON_WIDTH
+    stripped=$(printf '%s' "$line" | sed 's/\x1b\[[0-9;]*m//g')
+    visible_len=${#stripped}
+    pad=$(( ICON_WIDTH - visible_len ))
+    [ "$pad" -lt 0 ] && pad=0
+    printf '%s%*s\n' "$line" "$pad" ""
+  done < <(chafa --format=symbols --symbols=block --size=${ICON_WIDTH}x12 --colors=truecolor "$ICON_SRC")
 
   echo ""
 
