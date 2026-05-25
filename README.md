@@ -72,18 +72,45 @@ Run multiple channels simultaneously — or add more anytime.
 
 Skills extend what your agent can do. Install only what you need.
 
-| Skill | What it adds |
-|-------|-------------|
-| **Social CLI** | Post, schedule, and manage content across 15 social platforms. 35+ MCP tools. [Get a key →](https://socialcli.xyz) |
-| **Custom** | Build your own skills or install community ones — calendar, code review, docs, anything. |
+### Installing the Social CLI Skill
 
-Once installed, just talk:
+```bash
+# 1. Get your API key from https://socialcli.xyz/dashboard/api-keys
 
+# 2. Install the skill into your agent
+gh skill install social-cli/social-cli-skill
+
+# 3. Set your API key in the agent's environment
+echo 'SOCIAL_CLI_API_KEY=sk_your_key_here' >> .env
+
+# 4. Restart your agent
+bash socialclaw.sh
 ```
-@agent post "Just shipped v2!" to Twitter and LinkedIn
-@agent schedule a thread for tomorrow 9am
-@agent check my engagement this week
-@agent reply to unanswered DMs
+
+Or install via npx:
+```bash
+npx skills add social-cli/social-cli-skill
+```
+
+### What the Social CLI skill adds
+
+| Capability | Example |
+|-----------|---------|
+| Cross-platform posting | `@agent post "Hello!" to Twitter and LinkedIn` |
+| Scheduling | `@agent schedule "Weekly update" for tomorrow 9am` |
+| Analytics | `@agent check my engagement this week` |
+| Queue management | `@agent add this to my posting queue` |
+| DM replies | `@agent reply to unanswered DMs` |
+| Media upload | `@agent post this image to Instagram` |
+
+15 platforms supported: Twitter/X · Instagram · Facebook · LinkedIn · TikTok · YouTube · Pinterest · Reddit · Telegram · Discord · Bluesky · Snapchat · WhatsApp · Google Business · Threads
+
+### Other Skills
+
+Build your own or install community skills — calendar, code review, docs, anything:
+
+```bash
+gh skill install <owner>/<skill-name>
 ```
 
 <br>
