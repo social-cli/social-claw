@@ -2,6 +2,11 @@
 # Generate the setup splash from assets/Logo Icon 3.png + figlet wordmark.
 # Pre-generated at build time — committed to repo. End users never run this.
 #
+# The output file uses a NULL-byte sentinel \0 at the start of every line.
+# socialclaw.sh strips \0 and re-pads each line for the user's actual
+# terminal width — so the splash always looks centered regardless of
+# terminal size.
+#
 # To regenerate: bash scripts/generate-splash.sh
 # Requires: chafa, figlet (sudo apt install -y chafa figlet)
 
@@ -28,61 +33,34 @@ if ! command -v figlet >/dev/null 2>&1; then
   exit 1
 fi
 
-# Helper: pad a line so it's centered in an 80-column terminal
-center_line() {
-  local line="$1"
-  local visible_width="$2"  # number of visible chars (excluding ANSI codes)
-  local term_width=80
-  local pad=$(( (term_width - visible_width) / 2 ))
-  [ "$pad" -lt 0 ] && pad=0
-  printf '%*s%s\n' "$pad" "" "$line"
-}
-
-# ─── Build splash ─────────────────────────────────────────────────────
+# ─── Build splash (no padding — socialclaw.sh centers at display time) ────
 {
   echo ""
   echo ""
 
-  # Logo as block pixel art — centered in 80-col terminal
-  # Render at 24 wide so we can center with ~28 cols of padding on each side
-  ICON_LINES=$(chafa --format=symbols --symbols=block --size=24x12 --colors=truecolor "$ICON_SRC")
-  while IFS= read -r line; do
-    printf '%*s%s\n' 28 "" "$line"
-  done <<< "$ICON_LINES"
+  # Logo as block pixel art (24 cols wide)
+  chafa --format=symbols --symbols=block --size=24x12 --colors=truecolor "$ICON_SRC"
 
   echo ""
 
-  # Wordmark in terracotta — figlet outputs known widths per font
-  # "Social Claw" in 'slant' font is ~62 chars wide → pad by 9
+  # Wordmark in terracotta
   printf '\033[38;2;217;95;43m\033[1m'
-  WORDMARK=$(figlet -f slant -w 80 "Social Claw" 2>/dev/null || figlet -w 80 "Social Claw")
-  while IFS= read -r line; do
-    # Center each figlet line based on its visible length
-    local_width=${#line}
-    pad=$(( (80 - local_width) / 2 ))
-    [ "$pad" -lt 0 ] && pad=0
-    printf '%*s%s\n' "$pad" "" "$line"
-  done <<< "$WORDMARK"
+  figlet -f slant -w 80 "Social Claw" 2>/dev/null || figlet -w 80 "Social Claw"
   printf '\033[22m\033[39m'
 
   echo ""
 
-  # Tagline — centered (visible: "Secure agents · Runs on your machine · Yours to modify" = 53 chars)
-  TAGLINE_TEXT="Secure agents · Runs on your machine · Yours to modify"
-  TAGLINE_PAD=$(( (80 - 54) / 2 ))
-  printf '%*s\033[2m%s\033[22m\n' "$TAGLINE_PAD" "" "$TAGLINE_TEXT"
+  # Tagline (dim)
+  printf '\033[2mSecure agents · Runs on your machine · Yours to modify\033[22m\n'
 
   echo ""
 
-  # Separator — 60 chars wide, centered
-  SEP=$(printf '═%.0s' $(seq 1 60))
-  SEP_PAD=$(( (80 - 60) / 2 ))
-  printf '%*s\033[38;2;217;95;43m%s\033[39m\n' "$SEP_PAD" "" "$SEP"
+  # Separator (60 chars)
+  printf '\033[38;2;217;95;43m'
+  printf '═%.0s' $(seq 1 60)
+  printf '\033[39m\n'
 
   echo ""
 } > "$SPLASH_OUT"
 
 echo "✓ Generated $SPLASH_OUT ($(wc -c < "$SPLASH_OUT") bytes)"
-echo ""
-echo "─── Preview ───"
-cat "$SPLASH_OUT"

@@ -129,13 +129,40 @@ rm -f  "$PROGRESS_LOG"
 mkdir -p "$STEPS_DIR" "$LOGS_DIR"
 write_header
 
-# Social Claw splash — under-the-sea lobster mascot in truecolor braille,
-# with the figlet wordmark and taglines below. Pre-rendered into
-# assets/setup-splash.txt (built from assets/nanoclaw-icon.png via chafa +
-# figlet); the bash script just streams the literal frame. clack's intro
-# then carries the "let's get you set up" framing — setup:auto sees
-# NANOCLAW_BOOTSTRAPPED=1 and skips re-printing the wordmark.
-cat "$PROJECT_ROOT/assets/setup-splash.txt"
+# Social Claw splash — logo pixel art + figlet wordmark, pre-rendered into
+# assets/setup-splash.txt by scripts/generate-splash.sh. We center it
+# dynamically based on the user's actual terminal width so it always looks
+# good regardless of terminal size.
+display_splash() {
+  local splash_file="$PROJECT_ROOT/assets/setup-splash.txt"
+  [ ! -f "$splash_file" ] && return
+
+  # Get terminal width — fallback to 80 if unavailable
+  local term_width
+  term_width=$(tput cols 2>/dev/null || echo 80)
+
+  # Find the widest visible line in the splash (strip ANSI codes for width calc)
+  local max_width=0
+  while IFS= read -r line; do
+    # Strip ANSI escape sequences to get visible width
+    local stripped
+    stripped=$(printf '%s' "$line" | sed 's/\x1b\[[0-9;]*m//g')
+    local len=${#stripped}
+    [ "$len" -gt "$max_width" ] && max_width=$len
+  done < "$splash_file"
+
+  # Calculate left padding to center the block
+  local pad=$(( (term_width - max_width) / 2 ))
+  [ "$pad" -lt 0 ] && pad=0
+  local padding
+  padding=$(printf '%*s' "$pad" "")
+
+  # Print each line with the padding prepended
+  while IFS= read -r line; do
+    printf '%s%s\n' "$padding" "$line"
+  done < "$splash_file"
+}
+display_splash
 
 # ─── pre-flight: minimum hardware specs ────────────────────────────────
 # Social Claw runs an agent container per session. Below this threshold the
