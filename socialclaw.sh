@@ -130,36 +130,32 @@ mkdir -p "$STEPS_DIR" "$LOGS_DIR"
 write_header
 
 # Social Claw splash — logo pixel art + figlet wordmark, pre-rendered into
-# assets/setup-splash.txt by scripts/generate-splash.sh. We center it
-# dynamically based on the user's actual terminal width so it always looks
-# good regardless of terminal size.
+# assets/setup-splash.txt by scripts/generate-splash.sh. Each line is
+# centered INDIVIDUALLY based on its visible width so the logo, wordmark,
+# tagline, and separator all align around the terminal's true center.
 display_splash() {
   local splash_file="$PROJECT_ROOT/assets/setup-splash.txt"
   [ ! -f "$splash_file" ] && return
 
-  # Get terminal width — fallback to 80 if unavailable
   local term_width
   term_width=$(tput cols 2>/dev/null || echo 80)
 
-  # Find the widest visible line in the splash (strip ANSI codes for width calc)
-  local max_width=0
   while IFS= read -r line; do
-    # Strip ANSI escape sequences to get visible width
+    # Strip ANSI escape sequences to measure visible width
     local stripped
     stripped=$(printf '%s' "$line" | sed 's/\x1b\[[0-9;]*m//g')
-    local len=${#stripped}
-    [ "$len" -gt "$max_width" ] && max_width=$len
-  done < "$splash_file"
+    local visible_len=${#stripped}
 
-  # Calculate left padding to center the block
-  local pad=$(( (term_width - max_width) / 2 ))
-  [ "$pad" -lt 0 ] && pad=0
-  local padding
-  padding=$(printf '%*s' "$pad" "")
+    # Empty lines: just print blank
+    if [ "$visible_len" -eq 0 ]; then
+      echo ""
+      continue
+    fi
 
-  # Print each line with the padding prepended
-  while IFS= read -r line; do
-    printf '%s%s\n' "$padding" "$line"
+    # Center this individual line based on its own width
+    local pad=$(( (term_width - visible_len) / 2 ))
+    [ "$pad" -lt 0 ] && pad=0
+    printf '%*s%s\n' "$pad" "" "$line"
   done < "$splash_file"
 }
 display_splash
