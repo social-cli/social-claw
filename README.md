@@ -2,6 +2,9 @@
   <strong>Social Claw</strong>
 </p>
 
+<img width="1918" height="890" alt="social-claw" src="https://github.com/user-attachments/assets/71c6ae6d-f729-4b82-9e49-71870804f59c" />
+
+
 <p align="center">
   A lightweight AI assistant that runs agents securely in their own containers. Connect via WhatsApp, Telegram, Discord, or CLI. Small enough to understand, secure by isolation, built for the individual user.
 </p>
