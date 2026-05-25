@@ -45,16 +45,18 @@ The setup walks you from a fresh machine to a named agent you can message. It in
 - Terminal (local CLI)
 - Or add any channel later with `/add-<channel>`
 
-## Skills
+## Skills (Optional Add-ons)
 
-Social Claw supports installable skills that extend your agent's capabilities. During setup or anytime after, you can inject skills like:
+Skills extend your agent's capabilities. They're optional — install only what you need. During setup or anytime after, you can inject skills like:
 
-- **Social CLI** — Post, schedule, and manage content across 15 social media platforms (Twitter/X, Instagram, LinkedIn, TikTok, YouTube, Facebook, and more). 35+ MCP tools for social media automation. Get a key at [socialcli.xyz](https://socialcli.xyz).
-- **Custom skills** — Build your own or install community skills to give your agent new abilities.
+- **Social CLI** — Adds social media automation. Lets your agent post, schedule, and manage content across 15 platforms (Twitter/X, Instagram, LinkedIn, TikTok, YouTube, Facebook, etc.). Get a key at [socialcli.xyz](https://socialcli.xyz).
+- **Custom skills** — Build your own or install community skills to add abilities like calendar access, code review, document parsing, or anything else.
+
+Once a skill is installed, just talk to your agent:
 
 ```
 @agent post "Just shipped a new feature!" to Twitter and LinkedIn
-@agent schedule "Weekly update" for tomorrow 9am on all platforms
+@agent schedule "Weekly update" for tomorrow 9am
 @agent check my analytics for this week
 ```
 
