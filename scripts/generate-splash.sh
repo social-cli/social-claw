@@ -28,23 +28,57 @@ if ! command -v figlet >/dev/null 2>&1; then
   exit 1
 fi
 
+# Helper: pad a line so it's centered in an 80-column terminal
+center_line() {
+  local line="$1"
+  local visible_width="$2"  # number of visible chars (excluding ANSI codes)
+  local term_width=80
+  local pad=$(( (term_width - visible_width) / 2 ))
+  [ "$pad" -lt 0 ] && pad=0
+  printf '%*s%s\n' "$pad" "" "$line"
+}
+
 # ─── Build splash ─────────────────────────────────────────────────────
 {
   echo ""
   echo ""
-  # Logo as block pixel art in truecolor (preserves logo's actual colors)
-  chafa --format=symbols --symbols=block --size=36x16 --colors=truecolor "$ICON_SRC" | sed 's/^/    /'
+
+  # Logo as block pixel art — centered in 80-col terminal
+  # Render at 24 wide so we can center with ~28 cols of padding on each side
+  ICON_LINES=$(chafa --format=symbols --symbols=block --size=24x12 --colors=truecolor "$ICON_SRC")
+  while IFS= read -r line; do
+    printf '%*s%s\n' 28 "" "$line"
+  done <<< "$ICON_LINES"
+
   echo ""
-  # Wordmark in terracotta
+
+  # Wordmark in terracotta — figlet outputs known widths per font
+  # "Social Claw" in 'slant' font is ~62 chars wide → pad by 9
   printf '\033[38;2;217;95;43m\033[1m'
-  figlet -f slant -w 80 "Social Claw" 2>/dev/null || figlet -w 80 "Social Claw"
+  WORDMARK=$(figlet -f slant -w 80 "Social Claw" 2>/dev/null || figlet -w 80 "Social Claw")
+  while IFS= read -r line; do
+    # Center each figlet line based on its visible length
+    local_width=${#line}
+    pad=$(( (80 - local_width) / 2 ))
+    [ "$pad" -lt 0 ] && pad=0
+    printf '%*s%s\n' "$pad" "" "$line"
+  done <<< "$WORDMARK"
   printf '\033[22m\033[39m'
+
   echo ""
-  # Tagline — Social Claw's core promise (not skill-specific)
-  printf '\033[2m              Secure agents · Runs on your machine · Yours to modify\033[22m\n'
+
+  # Tagline — centered (visible: "Secure agents · Runs on your machine · Yours to modify" = 53 chars)
+  TAGLINE_TEXT="Secure agents · Runs on your machine · Yours to modify"
+  TAGLINE_PAD=$(( (80 - 54) / 2 ))
+  printf '%*s\033[2m%s\033[22m\n' "$TAGLINE_PAD" "" "$TAGLINE_TEXT"
+
   echo ""
-  # Separator
-  printf '\033[38;2;217;95;43m═══════════════════════════════════════════════════════════════════\033[39m\n'
+
+  # Separator — 60 chars wide, centered
+  SEP=$(printf '═%.0s' $(seq 1 60))
+  SEP_PAD=$(( (80 - 60) / 2 ))
+  printf '%*s\033[38;2;217;95;43m%s\033[39m\n' "$SEP_PAD" "" "$SEP"
+
   echo ""
 } > "$SPLASH_OUT"
 
