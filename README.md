@@ -5,7 +5,7 @@
 <h1 align="center"><em>Social Claw</em></h1>
 
 <p align="center">
-  <img src="assets/splash-preview.png" alt="Social Claw terminal splash" width="700">
+  <img width="1918" height="890" alt="social-claw" src="https://github.com/user-attachments/assets/8f806f53-76f2-42ea-aeed-9e7b53113ed6" />
 </p>
 
 <p align="center">
