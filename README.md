@@ -18,9 +18,7 @@
 
 ---
 
-<br>
-
-## ⚡ Quick Start
+## Quick Start
 
 ```bash
 git clone https://github.com/social-cli/social-claw.git
@@ -28,24 +26,24 @@ cd social-claw
 bash socialclaw.sh
 ```
 
-> Setup handles everything — Node, pnpm, Docker, container build. Up and running in under 5 minutes.
+Setup handles everything — Node, pnpm, Docker, container build. Up and running in under 5 minutes.
 
-<br>
+---
 
-## 🛡️ Core Features
+## Core Features
 
 | Feature | Description |
 |---------|-------------|
-| **Container Isolation** | Each agent runs in its own Linux container. Commands execute inside the sandbox, never on your host. |
-| **Per-Agent Memory** | Every agent has its own workspace, instructions, and persistent memory. Nothing crosses boundaries. |
-| **Scheduled Tasks** | Recurring jobs that run your agent on a cron and message you back with results. |
-| **Web Access** | Search the web, fetch pages, summarize content — all from within the agent sandbox. |
-| **Credential Vault** | API keys never enter the container. Outbound requests route through OneCLI vault which injects auth at request time. |
-| **AI-Native Debugging** | Something broke? Describe it in chat. The agent diagnoses and fixes itself. No dashboards needed. |
+| Container Isolation | Each agent runs in its own Linux container. Commands execute inside the sandbox, never on your host. |
+| Per-Agent Memory | Every agent has its own workspace, instructions, and persistent memory. Nothing crosses boundaries. |
+| Scheduled Tasks | Recurring jobs that run your agent on a cron and message you back with results. |
+| Web Access | Search the web, fetch pages, summarize content — all from within the agent sandbox. |
+| Credential Vault | API keys never enter the container. Outbound requests route through OneCLI vault which injects auth at request time. |
+| AI-Native Debugging | Something broke? Describe it in chat. The agent diagnoses and fixes itself. No dashboards needed. |
 
-<br>
+---
 
-## 🧩 Skills
+## Skills
 
 Skills extend what your agent can do. Social Claw ships with the Social CLI skill — giving your agent full social media automation out of the box.
 
@@ -77,24 +75,19 @@ bash socialclaw.sh
 
 **15 platforms:** Twitter/X · Instagram · Facebook · LinkedIn · TikTok · YouTube · Pinterest · Reddit · Telegram · Discord · Bluesky · Snapchat · WhatsApp · Google Business · Threads
 
-<br>
+---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
-┌─────────────┐     ┌──────────────┐     ┌─────────────────────────┐
-│  Messaging  │────▶│  Host Process │────▶│  Container (Agent SDK)  │
-│  Channels   │◀────│  (Router)     │◀────│  Sandboxed execution    │
-└─────────────┘     └──────────────┘     └─────────────────────────┘
-                         │    ▲
-                    inbound.db  outbound.db
+messaging apps → host process (router) → inbound.db → container (Claude Agent SDK) → outbound.db → host process (delivery) → messaging apps
 ```
 
 One Node process on the host. Per-session containers. Two SQLite files per session (one writer each). No microservices, no IPC, no complexity.
 
-<br>
+---
 
-## 🎨 Customizing
+## Customizing
 
 No config files. Just tell your agent what you want:
 
@@ -108,19 +101,17 @@ No config files. Just tell your agent what you want:
 
 The codebase is small enough that the agent can safely modify itself.
 
-<br>
+---
 
-## 📋 Requirements
+## Requirements
 
-| Requirement | |
-|-------------|---|
-| macOS, Linux, or Windows (via WSL2) | |
-| Node.js 20+ and pnpm 10+ | |
-| Docker Desktop or Docker Engine | |
-| Anthropic API key (for Claude) | |
+- macOS, Linux, or Windows (via WSL2)
+- Node.js 20+ and pnpm 10+
+- Docker Desktop or Docker Engine
+- Anthropic API key (for Claude)
 
-<br>
+---
 
-## 📄 License
+## License
 
 MIT
