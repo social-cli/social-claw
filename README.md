@@ -5,9 +5,9 @@
 <h1 align="center"><em>Social Claw</em></h1>
 
 <p align="center">
-  <strong>Message your agent. It handles the rest.</strong><br><br>
-  A containerized AI agent you control through any messaging app.<br>
-  Tell it what to post, when to schedule — it executes across 15 platforms, securely in its own sandbox.
+  <strong>A secure, containerized AI agent that runs on your machine.</strong><br><br>
+  Install the Social CLI skill and your agent gains full control over 15 social media platforms —<br>
+  post, schedule, analyze, and reply, all from a single conversation.
 </p>
 
 <p align="center">
@@ -28,49 +28,28 @@ cd social-claw
 bash socialclaw.sh
 ```
 
-> Setup handles everything — Node, pnpm, Docker, container build, and channel pairing. Chatting with your agent in under 5 minutes.
+> Setup handles everything — Node, pnpm, Docker, container build. Up and running in under 5 minutes.
 
 <br>
 
 ## 🛡️ Core Features
 
-| | Feature | Description |
-|---|---|---|
-| 🐳 | **Container Isolation** | Each agent runs in its own Linux container. Commands execute inside the sandbox, never on your host. |
-| 💬 | **Multi-Channel** | WhatsApp, Telegram, Discord, Bluesky, Reddit, Threads, Signal, Slack, iMessage, Teams, and more. Add channels with `/add-<channel>`. |
-| 🧠 | **Per-Agent Memory** | Every agent has its own workspace, instructions, and persistent memory. Nothing crosses boundaries. |
-| ⏰ | **Scheduled Tasks** | Recurring jobs that run your agent on a cron and message you back with results. |
-| 🌐 | **Web Access** | Search the web, fetch pages, summarize content — all from within the agent sandbox. |
-| 🔐 | **Credential Vault** | API keys never enter the container. Outbound requests route through OneCLI vault which injects auth at request time. |
-| 🤖 | **AI-Native** | Something broke? Describe it in chat. The agent diagnoses and fixes itself. |
+| Feature | Description |
+|---------|-------------|
+| **Container Isolation** | Each agent runs in its own Linux container. Commands execute inside the sandbox, never on your host. |
+| **Per-Agent Memory** | Every agent has its own workspace, instructions, and persistent memory. Nothing crosses boundaries. |
+| **Scheduled Tasks** | Recurring jobs that run your agent on a cron and message you back with results. |
+| **Web Access** | Search the web, fetch pages, summarize content — all from within the agent sandbox. |
+| **Credential Vault** | API keys never enter the container. Outbound requests route through OneCLI vault which injects auth at request time. |
+| **AI-Native Debugging** | Something broke? Describe it in chat. The agent diagnoses and fixes itself. No dashboards needed. |
 
 <br>
 
-## 📱 Connect Via
+## 🧩 Skills
 
-During setup, choose how you want to talk to your agent:
+Skills extend what your agent can do. Social Claw ships with the Social CLI skill — giving your agent full social media automation out of the box.
 
-```
-● Telegram (recommended)
-○ Discord
-○ WhatsApp
-○ Signal
-○ iMessage (experimental)
-○ Slack (experimental)
-○ Microsoft Teams
-○ Terminal (local CLI)
-○ Other… (install via /add-<name> after setup)
-```
-
-Run multiple channels simultaneously — or add more anytime.
-
-<br>
-
-## 🧩 Skills (Optional Add-ons)
-
-Skills extend what your agent can do. Install only what you need.
-
-### Installing the Social CLI Skill
+### Install the Social CLI Skill
 
 ```bash
 # 1. Get your API key from https://socialcli.xyz/dashboard/api-keys
@@ -85,7 +64,7 @@ echo 'SOCIAL_CLI_API_KEY=sk_your_key_here' >> .env
 bash socialclaw.sh
 ```
 
-### What the Social CLI skill adds
+### What it adds
 
 | Capability | Example |
 |-----------|---------|
@@ -96,13 +75,7 @@ bash socialclaw.sh
 | DM replies | `@agent reply to unanswered DMs` |
 | Media upload | `@agent post this image to Instagram` |
 
-15 platforms: Twitter/X · Instagram · Facebook · LinkedIn · TikTok · YouTube · Pinterest · Reddit · Telegram · Discord · Bluesky · Snapchat · WhatsApp · Google Business · Threads
-
-### Other Skills
-
-```bash
-gh skill install <owner>/<skill-name>
-```
+**15 platforms:** Twitter/X · Instagram · Facebook · LinkedIn · TikTok · YouTube · Pinterest · Reddit · Telegram · Discord · Bluesky · Snapchat · WhatsApp · Google Business · Threads
 
 <br>
 
@@ -139,12 +112,12 @@ The codebase is small enough that the agent can safely modify itself.
 
 ## 📋 Requirements
 
-| | Requirement |
-|---|---|
-| 💻 | macOS, Linux, or Windows (via WSL2) |
-| 📦 | Node.js 20+ and pnpm 10+ |
-| 🐳 | Docker Desktop or Docker Engine |
-| 🔑 | Anthropic API key (for Claude) |
+| Requirement | |
+|-------------|---|
+| macOS, Linux, or Windows (via WSL2) | |
+| Node.js 20+ and pnpm 10+ | |
+| Docker Desktop or Docker Engine | |
+| Anthropic API key (for Claude) | |
 
 <br>
 
