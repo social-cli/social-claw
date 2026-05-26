@@ -5,6 +5,10 @@
 <h1 align="center"><em>Social Claw</em></h1>
 
 <p align="center">
+  <img src="assets/splash-preview.png" alt="Social Claw terminal splash" width="700">
+</p>
+
+<p align="center">
   <strong>A secure, containerized AI agent that runs on your machine.</strong><br><br>
   Install the Social CLI skill and your agent gains full control over 15 social media platforms —<br>
   post, schedule, analyze, and reply, all from a single conversation.
