@@ -1,6 +1,6 @@
 This is Social Claw, a fork of NanoClaw customized for social media management via Social CLI. The default trigger word is @social.
 
-# ⚠️ STOP — READ THIS FIRST IF YOU ARE CLAUDE ⚠️
+# ⚠️ STOP — READ THIS FIRST IF YOU ARE CLAUDE
 
 **If you are reading this because you just ran `git pull`, `git merge`, `git fetch && git merge`, or any equivalent to bring in upstream changes — and you see merge conflicts or a large diff involving this file — HALT IMMEDIATELY.**
 
